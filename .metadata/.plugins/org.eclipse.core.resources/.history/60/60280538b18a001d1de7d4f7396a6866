@@ -1,0 +1,10 @@
+/*
+ * MPU6050.c
+ *
+ *  Created on: Jan 2, 2023
+ *      Author: Arjanit
+ */
+
+
+#include "MPU6050.h"
+

@@ -1,0 +1,107 @@
+/*
+ * MPU6050.c
+ *
+ *  Created on: Jan 2, 2023
+ *      Author: Arjanit
+ */
+
+
+#include "MPU6050.h"
+
+//extern I2C_HandleTypeDef hi2c
+
+
+
+
+
+void MPU6050_init(mpu6050_t *obj, I2C_HandleTypeDef *hi2c)
+{
+
+	obj->_i2c = hi2c;
+	obj->interrupt_flag = 0;
+	memset(obj->_X_data, 0, MPU6050_SAMPLE_LEN_MAX * sizeof(uint32_t));
+	memset(obj->_Y_data, 0, MPU6050_SAMPLE_LEN_MAX * sizeof(uint32_t));
+	memset(obj->_Z_data, 0, MPU6050_SAMPLE_LEN_MAX * sizeof(uint32_t));
+
+
+
+}
+
+
+__weak void MPU6050_data_out()
+{
+
+}
+
+
+
+void MPU6050_write(mpu6050_t *obj, uint8_t reg, uint8_t * buf, uint16_t buflen)
+{
+	uint8_t *payload = (uint8_t *)malloc((buflen+1) * sizeof(uint8_t));
+	*payload = reg;
+
+	if(buf != NULL && buflen != 0)
+	{
+		memcpy(payload+1,buf,buflen);
+
+	}
+
+	HAL_I2C_Master_Transmit(obj->_i2c, MPU6050_ADDRESS << 1, payload, buflen, 50);
+
+}
+
+
+
+
+void MPU6050_PWR_Config(mpu6050_t * obj)
+{
+	uint8_t data = 0x00;
+
+	MPU6050_write(obj, PWR_MGMT_1, &data, 1);
+
+}
+
+
+
+void MPU6050_SMPL_DIV(mpu6050_t * obj)
+{
+	uint8_t data = 0x07;
+
+	MPU6050_write(obj, SMPLRT_DIV, &data, 1);
+
+}
+
+
+
+void MPU6050_ACCEL_CFG(mpu6050_t * obj)
+{
+	uint8_t data = 0x00;
+
+	MPU6050_write(obj, ACCEL_CONFIG, &data, 1);
+
+}
+
+void MPU6050_GYRO_CFG(mpu6050_t * obj)
+{
+	uint8_t data = 0x00;
+
+	MPU6050_write(obj, GYRO_CONFIG, &data, 1);
+
+}
+
+
+void MPU6050_READ_ACCEL_DATA(mpu6050_t * obj)
+{
+	uint8_t data[6];
+	MPU6050_read(obj, ACCEL_XOUT_H_REG, data, 6);
+
+	obj->_X_data = (int16_t)(data[0] << 8 | data[1])/16384;
+	obj->_Y_data = (int16_t)(data[2] << 8 | data[3])/16384;
+	obj->_Z_data = (int16_t)(data[4] << 8 | data[5])/16384;
+
+
+
+
+}
+
+

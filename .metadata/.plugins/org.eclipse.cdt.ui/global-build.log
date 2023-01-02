@@ -1,0 +1,501 @@
+00:01:32 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_data_out_ACCEL':
+../Core/Src/MPU6050.c:58:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   58 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:58:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/MPU6050.c:58:26: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   58 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                       ~~~^                              ~~~~~~
+      |                          |                              |
+      |                          double                         uint32_t {aka long unsigned int}
+      |                       %.2ld
+../Core/Src/MPU6050.c:58:40: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   58 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                     ~~~^                       ~~~~~~
+      |                                        |                       |
+      |                                        double                  uint32_t {aka long unsigned int}
+      |                                     %.2ld
+../Core/Src/MPU6050.c:58:54: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   58 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                                   ~~~^                ~~~~~~
+      |                                                      |                |
+      |                                                      double           uint32_t {aka long unsigned int}
+      |                                                   %.2ld
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:157:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  157 |  sprintf(msg,"X:%f\nY:%f\nZ:%f",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:157:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/MPU6050.c:149:31: warning: 'data[0]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  149 |  obj->_X_data = (int16_t)(data[0] << 8 | data[1]);
+      |                           ~~~~^~~
+../Core/Src/MPU6050.c:149:46: warning: 'data[1]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  149 |  obj->_X_data = (int16_t)(data[0] << 8 | data[1]);
+      |                                          ~~~~^~~
+../Core/Src/MPU6050.c:150:31: warning: 'data[2]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  150 |  obj->_Y_data = (int16_t)(data[2] << 8 | data[3]);
+      |                           ~~~~^~~
+../Core/Src/MPU6050.c:150:46: warning: 'data[3]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  150 |  obj->_Y_data = (int16_t)(data[2] << 8 | data[3]);
+      |                                          ~~~~^~~
+../Core/Src/MPU6050.c:151:31: warning: 'data[4]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  151 |  obj->_Z_data = (int16_t)(data[4] << 8 | data[5]);
+      |                           ~~~~^~~
+../Core/Src/MPU6050.c:151:46: warning: 'data[5]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  151 |  obj->_Z_data = (int16_t)(data[4] << 8 | data[5]);
+      |                                          ~~~~^~~
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  29708	    484	   1828	  32020	   7d14	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: MPU6050_test.bin
+ 
+Finished building: MPU6050_test.list
+ 
+00:01:39 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-size   MPU6050_test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  29708	    484	   1828	  32020	   7d14	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+00:03:57 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_data_out_ACCEL':
+../Core/Src/MPU6050.c:40:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:40:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/MPU6050.c:40:26: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                       ~~~^                              ~~~~~~
+      |                          |                              |
+      |                          double                         uint32_t {aka long unsigned int}
+      |                       %.2ld
+../Core/Src/MPU6050.c:40:40: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                     ~~~^                       ~~~~~~
+      |                                        |                       |
+      |                                        double                  uint32_t {aka long unsigned int}
+      |                                     %.2ld
+../Core/Src/MPU6050.c:40:54: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                                   ~~~^                ~~~~~~
+      |                                                      |                |
+      |                                                      double           uint32_t {aka long unsigned int}
+      |                                                   %.2ld
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:138:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  138 |  sprintf(msg,"X:%f\nY:%f\nZ:%f",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:138:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/MPU6050.c:130:31: warning: 'data[0]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  130 |  obj->_X_data = (int16_t)(data[0] << 8 | data[1]);
+      |                           ~~~~^~~
+../Core/Src/MPU6050.c:130:46: warning: 'data[1]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  130 |  obj->_X_data = (int16_t)(data[0] << 8 | data[1]);
+      |                                          ~~~~^~~
+../Core/Src/MPU6050.c:131:31: warning: 'data[2]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  131 |  obj->_Y_data = (int16_t)(data[2] << 8 | data[3]);
+      |                           ~~~~^~~
+../Core/Src/MPU6050.c:131:46: warning: 'data[3]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  131 |  obj->_Y_data = (int16_t)(data[2] << 8 | data[3]);
+      |                                          ~~~~^~~
+../Core/Src/MPU6050.c:132:31: warning: 'data[4]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  132 |  obj->_Z_data = (int16_t)(data[4] << 8 | data[5]);
+      |                           ~~~~^~~
+../Core/Src/MPU6050.c:132:46: warning: 'data[5]' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  132 |  obj->_Z_data = (int16_t)(data[4] << 8 | data[5]);
+      |                                          ~~~~^~~
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  29708	    484	   1828	  32020	   7d14	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: MPU6050_test.bin
+ 
+Finished building: MPU6050_test.list
+ 
+00:04:46 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_data_out_ACCEL':
+../Core/Src/MPU6050.c:40:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:40:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/MPU6050.c:40:26: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                       ~~~^                              ~~~~~~
+      |                          |                              |
+      |                          double                         uint32_t {aka long unsigned int}
+      |                       %.2ld
+../Core/Src/MPU6050.c:40:40: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                     ~~~^                       ~~~~~~
+      |                                        |                       |
+      |                                        double                  uint32_t {aka long unsigned int}
+      |                                     %.2ld
+../Core/Src/MPU6050.c:40:54: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                                   ~~~^                ~~~~~~
+      |                                                      |                |
+      |                                                      double           uint32_t {aka long unsigned int}
+      |                                                   %.2ld
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:127:32: warning: passing argument 3 of 'MPU6050_read' from incompatible pointer type [-Wincompatible-pointer-types]
+  127 |  MPU6050_read(obj,ACCEL_XOUT_H,&data,6);
+      |                                ^~~~~
+      |                                |
+      |                                int8_t (*)[6] {aka signed char (*)[6]}
+../Core/Src/MPU6050.c:64:57: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'int8_t (*)[6]' {aka 'signed char (*)[6]'}
+   64 | void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
+      |                                                ~~~~~~~~~^~~
+../Core/Src/MPU6050.c:138:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  138 |  sprintf(msg,"X:%f\nY:%f\nZ:%f",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:138:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  29716	    484	   1828	  32028	   7d1c	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: MPU6050_test.bin
+ 
+Finished building: MPU6050_test.list
+ 
+00:07:02 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_data_out_ACCEL':
+../Core/Src/MPU6050.c:40:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:40:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/MPU6050.c:40:26: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                       ~~~^                              ~~~~~~
+      |                          |                              |
+      |                          double                         uint32_t {aka long unsigned int}
+      |                       %.2ld
+../Core/Src/MPU6050.c:40:40: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                     ~~~^                       ~~~~~~
+      |                                        |                       |
+      |                                        double                  uint32_t {aka long unsigned int}
+      |                                     %.2ld
+../Core/Src/MPU6050.c:40:54: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                                   ~~~^                ~~~~~~
+      |                                                      |                |
+      |                                                      double           uint32_t {aka long unsigned int}
+      |                                                   %.2ld
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:127:32: warning: passing argument 3 of 'MPU6050_read' from incompatible pointer type [-Wincompatible-pointer-types]
+  127 |  MPU6050_read(obj,ACCEL_XOUT_H,&data,6);
+      |                                ^~~~~
+      |                                |
+      |                                int8_t (*)[6] {aka signed char (*)[6]}
+../Core/Src/MPU6050.c:64:57: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'int8_t (*)[6]' {aka 'signed char (*)[6]'}
+   64 | void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
+      |                                                ~~~~~~~~~^~~
+../Core/Src/MPU6050.c:138:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  138 |  sprintf(msg,"X:%f\nY:%f\nZ:%f",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:138:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:105:3: warning: implicit declaration of function 'MPU6050_SMPL_DIV' [-Wimplicit-function-declaration]
+  105 |   MPU6050_SMPL_DIV(&MPU6050_t);
+      |   ^~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'I2C_detect':
+../Core/Src/main.c:312:4: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  312 |    sprintf(msg,"The Address is 0x%02X\n",address);
+      |    ^~~~~~~
+../Core/Src/main.c:312:4: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/main.c:22:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   21 | #include "MPU6050.h"
+  +++ |+#include <stdio.h>
+   22 | 
+../Core/Src/main.c:325:4: warning: incompatible implicit declaration of built-in function 'sprintf'
+  325 |    sprintf(msg,"It did not find any devices\n");
+      |    ^~~~~~~
+../Core/Src/main.c:325:4: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  29740	    484	   1828	  32052	   7d34	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: MPU6050_test.bin
+ 
+Finished building: MPU6050_test.list
+ 
+00:07:31 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_data_out_ACCEL':
+../Core/Src/MPU6050.c:40:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:40:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/MPU6050.c:40:26: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                       ~~~^                              ~~~~~~
+      |                          |                              |
+      |                          double                         uint32_t {aka long unsigned int}
+      |                       %.2ld
+../Core/Src/MPU6050.c:40:40: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                     ~~~^                       ~~~~~~
+      |                                        |                       |
+      |                                        double                  uint32_t {aka long unsigned int}
+      |                                     %.2ld
+../Core/Src/MPU6050.c:40:54: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                                   ~~~^                ~~~~~~
+      |                                                      |                |
+      |                                                      double           uint32_t {aka long unsigned int}
+      |                                                   %.2ld
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:127:32: warning: passing argument 3 of 'MPU6050_read' from incompatible pointer type [-Wincompatible-pointer-types]
+  127 |  MPU6050_read(obj,ACCEL_XOUT_H,&data,6);
+      |                                ^~~~~
+      |                                |
+      |                                int8_t (*)[6] {aka signed char (*)[6]}
+../Core/Src/MPU6050.c:64:57: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'int8_t (*)[6]' {aka 'signed char (*)[6]'}
+   64 | void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
+      |                                                ~~~~~~~~~^~~
+../Core/Src/MPU6050.c:138:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  138 |  sprintf(msg,"X:%f\nY:%f\nZ:%f",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:138:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  29740	    484	   1828	  32052	   7d34	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: MPU6050_test.bin
+ 
+Finished building: MPU6050_test.list
+ 
+00:08:07 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_data_out_ACCEL':
+../Core/Src/MPU6050.c:40:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:40:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/MPU6050.c:40:26: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                       ~~~^                              ~~~~~~
+      |                          |                              |
+      |                          double                         uint32_t {aka long unsigned int}
+      |                       %.2ld
+../Core/Src/MPU6050.c:40:40: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                     ~~~^                       ~~~~~~
+      |                                        |                       |
+      |                                        double                  uint32_t {aka long unsigned int}
+      |                                     %.2ld
+../Core/Src/MPU6050.c:40:54: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                                   ~~~^                ~~~~~~
+      |                                                      |                |
+      |                                                      double           uint32_t {aka long unsigned int}
+      |                                                   %.2ld
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:127:32: warning: passing argument 3 of 'MPU6050_read' from incompatible pointer type [-Wincompatible-pointer-types]
+  127 |  MPU6050_read(obj,ACCEL_XOUT_H,&data,6);
+      |                                ^~~~~
+      |                                |
+      |                                int8_t (*)[6] {aka signed char (*)[6]}
+../Core/Src/MPU6050.c:64:57: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'int8_t (*)[6]' {aka 'signed char (*)[6]'}
+   64 | void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
+      |                                                ~~~~~~~~~^~~
+../Core/Src/MPU6050.c:138:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  138 |  sprintf(msg,"X:%f\nY:%f\nZ:%f",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:138:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  29740	    484	   1828	  32052	   7d34	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: MPU6050_test.bin
+ 
+Finished building: MPU6050_test.list
+ 
+00:08:40 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_data_out_ACCEL':
+../Core/Src/MPU6050.c:40:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:40:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/MPU6050.c:40:26: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                       ~~~^                              ~~~~~~
+      |                          |                              |
+      |                          double                         uint32_t {aka long unsigned int}
+      |                       %.2ld
+../Core/Src/MPU6050.c:40:40: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                     ~~~^                       ~~~~~~
+      |                                        |                       |
+      |                                        double                  uint32_t {aka long unsigned int}
+      |                                     %.2ld
+../Core/Src/MPU6050.c:40:54: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                                   ~~~^                ~~~~~~
+      |                                                      |                |
+      |                                                      double           uint32_t {aka long unsigned int}
+      |                                                   %.2ld
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:127:32: warning: passing argument 3 of 'MPU6050_read' from incompatible pointer type [-Wincompatible-pointer-types]
+  127 |  MPU6050_read(obj,ACCEL_XOUT_H,&data,6);
+      |                                ^~~~~
+      |                                |
+      |                                int8_t (*)[6] {aka signed char (*)[6]}
+../Core/Src/MPU6050.c:64:57: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'int8_t (*)[6]' {aka 'signed char (*)[6]'}
+   64 | void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
+      |                                                ~~~~~~~~~^~~
+../Core/Src/MPU6050.c:138:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  138 |  sprintf(msg,"X:%f\nY:%f\nZ:%f\n",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:138:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  29740	    484	   1828	  32052	   7d34	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: MPU6050_test.bin
+ 
+Finished building: MPU6050_test.list
+ 
+00:09:20 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_data_out_ACCEL':
+../Core/Src/MPU6050.c:40:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:40:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/MPU6050.c:40:26: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                       ~~~^                              ~~~~~~
+      |                          |                              |
+      |                          double                         uint32_t {aka long unsigned int}
+      |                       %.2ld
+../Core/Src/MPU6050.c:40:40: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                     ~~~^                       ~~~~~~
+      |                                        |                       |
+      |                                        double                  uint32_t {aka long unsigned int}
+      |                                     %.2ld
+../Core/Src/MPU6050.c:40:54: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   40 |  sprintf(msg,"data_x: %.2f\n data_y:%.2f\n data_z:%.2f",data_x,data_y,data_z);
+      |                                                   ~~~^                ~~~~~~
+      |                                                      |                |
+      |                                                      double           uint32_t {aka long unsigned int}
+      |                                                   %.2ld
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:127:32: warning: passing argument 3 of 'MPU6050_read' from incompatible pointer type [-Wincompatible-pointer-types]
+  127 |  MPU6050_read(obj,ACCEL_XOUT_H,&data,6);
+      |                                ^~~~~
+      |                                |
+      |                                int8_t (*)[6] {aka signed char (*)[6]}
+../Core/Src/MPU6050.c:64:57: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'int8_t (*)[6]' {aka 'signed char (*)[6]'}
+   64 | void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
+      |                                                ~~~~~~~~~^~~
+../Core/Src/MPU6050.c:138:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+  138 |  sprintf(msg,"\nX:%f\nY:%f\nZ:%f\n",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:138:2: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  29740	    484	   1828	  32052	   7d34	MPU6050_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: MPU6050_test.bin
+ 
+Finished building: MPU6050_test.list
+ 

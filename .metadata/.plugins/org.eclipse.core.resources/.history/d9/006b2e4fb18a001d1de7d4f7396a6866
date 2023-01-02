@@ -1,0 +1,22 @@
+/*
+ * MPU6050.c
+ *
+ *  Created on: Jan 2, 2023
+ *      Author: Arjanit
+ */
+
+
+#include "MPU6050.h"
+
+//extern I2C_HandleTypeDef hi2c
+
+
+mpu6050_t mpu6050_t;
+
+
+void MPU6050_init(mpu6050_t *obj, I2C_HandleTypeDef *hi2c)
+{
+
+
+
+}
