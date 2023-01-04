@@ -61,6 +61,7 @@ void I2C_detect(I2C_HandleTypeDef * I2C);
 
 /* USER CODE END PFP */
 mpu6050_t MPU6050_t;
+fifo_en_t fifo_en;
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
@@ -100,11 +101,30 @@ int main(void)
 //  I2C_detect(&hi2c1); // if you cant find the address please uncomment this function.
 //  uint8_t data = 0;
 
-  MPU6050_init(&MPU6050_t, &hi2c1);
-  MPU6050_PWR_Config(&MPU6050_t);
-  MPU6050_SMPL_DIV(&MPU6050_t);
-  MPU6050_ACCEL_CFG(&MPU6050_t);
-  MPU6050_GYRO_CFG(&MPU6050_t);
+//  MPU6050_init(&MPU6050_t, &hi2c1);
+//  MPU6050_PWR_Config(&MPU6050_t);
+//  MPU6050_SMPL_DIV(&MPU6050_t);
+//  MPU6050_ACCEL_CFG(&MPU6050_t);
+//  MPU6050_GYRO_CFG(&MPU6050_t);
+
+//  uint8_t data;
+
+  uint8_t config;
+
+//  MPU6050_read(&MPU6050_t, FIFO_EN, &config, 1);
+//  config = ((config & 0xF7) | 0x01 << TEMP_FIFO_EN);
+//
+//  MPU6050_write(&MPU6050_t, FIFO_EN, &config, 1);
+//
+//  MPU6050_read(&MPU6050_t, FIFO_EN, &data, 1);
+
+  	 uint8_t data = 0x07;
+
+//  	MPU6050_write(&MPU6050_t, SMPLRT_DIV, &data, 1);
+//
+//  	  MPU6050_read(&MPU6050_t, SMPLRT_DIV, &config, 1);
+
+
 
   /* USER CODE END 2 */
 
@@ -115,8 +135,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  MPU6050_READ_ACCEL_DATA(&MPU6050_t);
-	  HAL_Delay(1000);
+//	  MPU6050_READ_ACCEL_DATA(&MPU6050_t);
+//	  HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }

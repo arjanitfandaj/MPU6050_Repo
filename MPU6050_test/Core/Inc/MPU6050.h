@@ -117,6 +117,42 @@ typedef struct mpu6050_t
 
 
 
+typedef enum fifo_en_t
+{
+	SLV0_FIFO_EN,
+	SLV1_FIFO_EN,
+	SLV2_FIFO_EN,
+	ACCEL_FIFO_EN,
+	ZG_FIFO_EN,
+	YG_FIFO_EN,
+	XG_FIFO_EN,
+	TEMP_FIFO_EN
+
+
+
+}fifo_en_t;
+
+
+
+typedef enum afs_sel_t
+{
+	AFS_2g,
+	AFS_4g,
+	AFS_8g,
+	AFS_16g
+
+}afs_sel_t;
+
+
+typedef enum fs_sel_t
+{
+	//this bit selects the full scale range of the gyroscope
+	fs_250s,
+	fs_500s,
+	fs_1000s,
+	fs_2000s
+
+};
 
 
 

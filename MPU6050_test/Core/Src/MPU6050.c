@@ -13,9 +13,9 @@
 extern UART_HandleTypeDef huart2;
 
 
-float Ax = 0.0;
-float Ay = 0.0;
-float Az = 0.0;
+uint32_t Ax = 0;
+uint32_t Ay = 0;
+uint32_t Az = 0;
 
 
 void MPU6050_init(mpu6050_t *obj, I2C_HandleTypeDef *hi2c)
@@ -93,21 +93,42 @@ void MPU6050_SMPL_DIV(mpu6050_t * obj)
 
 
 
-void MPU6050_ACCEL_CFG(mpu6050_t * obj)
+void MPU6050_ACCEL_CFG(mpu6050_t * obj,afs_sel_t afs_select)
 {
-	uint8_t data = 0x00;
+	uint8_t data;
+
+	MPU6050_read(obj, ACCEL_CONFIG, &data, 1);
+
+	data = ((data & 0xE7) | afs_select << 3);
 
 	MPU6050_write(obj, ACCEL_CONFIG, &data, 1);
 
 }
 
-void MPU6050_GYRO_CFG(mpu6050_t * obj)
+void MPU6050_GYRO_CFG(mpu6050_t * obj,fs_sel_t fs_select)
 {
-	uint8_t data = 0x00;
-
+	uint8_t data;
+	MPU6050_read(obj, GYRO_CONFIG, &data, 1);
+	data=((data & 0xE7) | fs_select << 3);
 	MPU6050_write(obj, GYRO_CONFIG, &data, 1);
 
 }
+
+
+
+void MPU6050_FIFO_EN(mpu6050_t *obj, fifo_en_t fifo_en)
+{
+
+	uint8_t config = 0x00;
+	config = ((config & 0x00) | 0x01 << fifo_en); // enabling fifo for the accel data. By using the fifo_en check header you can use fifo for temp or gyro.
+	MPU6050_write(obj, FIFO_EN, &config, 1);
+
+
+}
+
+
+
+
 
 
 void MPU6050_READ_ACCEL_DATA(mpu6050_t * obj)
@@ -131,9 +152,9 @@ void MPU6050_READ_ACCEL_DATA(mpu6050_t * obj)
 	obj->_Y_data = (int16_t)(data[2] << 8 | data[3]);
 	obj->_Z_data = (int16_t)(data[4] << 8 | data[5]);
 
-	Ax = obj->_X_data/16384.0;
-	Ay = obj->_Y_data/16384.0;
-	Az = obj->_Z_data/16384.0;
+	Ax = (obj->_X_data/16384.0)*1000; // dont use float because the lib will take processing power and flash storage :)
+	Ay = (obj->_Y_data/16384.0)*1000;
+	Az = (obj->_Z_data/16384.0)*1000;
 
 	sprintf(msg,"\nX:%f\nY:%f\nZ:%f\n",Ax,Ay,Az);
 
