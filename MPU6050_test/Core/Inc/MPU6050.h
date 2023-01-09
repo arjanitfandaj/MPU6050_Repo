@@ -38,7 +38,7 @@
 #define I2C_SLV3_ADDR            0x2E
 #define I2C_SLV3_REG             0x2F
 #define I2C_SLV3_CTRL            0x30
-#define I2C_SLV4_ADDR            0x31
+#define I2C_SLV4_ADDR            0x31s
 #define I2C_SLV4_REG             0x32
 #define I2C_SLV4_DO              0x33
 #define I2C_SLV4_CTRL            0x34
@@ -107,6 +107,7 @@
 typedef struct mpu6050_t
 {
 	I2C_HandleTypeDef *_i2c;
+	UART_HandleTypeDef *_uart;
 	int16_t _X_data;
 	int16_t _Y_data;
 	int16_t _Z_data;
@@ -152,18 +153,34 @@ typedef enum fs_sel_t
 	fs_1000s,
 	fs_2000s
 
-};
+}fs_sel_t;
+
+typedef enum power_management_t
+{
+	CLK_SEL = 0x00,
+	TEMP_DIS = 0x03,
+	CYCLE = 0x05,
+	SLEEP = 0x06,
+	DEVICE_RESET = 0x07
+
+}power_management_t;
 
 
 
 
-void MPU6050_init(mpu6050_t *obj, I2C_HandleTypeDef *hi2c);
+
+
+void MPU6050_init(mpu6050_t *obj, I2C_HandleTypeDef *hi2c, UART_HandleTypeDef *UART);
 void MPU6050_write(mpu6050_t *obj, uint8_t reg, uint8_t * buf, uint16_t buflen);
 void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen);
-void MPU6050_PWR_Config(mpu6050_t * obj);
+//void MPU6050_PWR_Config(mpu6050_t * obj);
 void MPU6050_data_out_ACCEL(uint32_t data_x, uint32_t data_y, uint32_t data_z);
-void MPU6050_ACCEL_CFG(mpu6050_t * obj);
-void MPU6050_GYRO_CFG(mpu6050_t * obj);
+void MPU6050_ACCEL_CFG(mpu6050_t * obj, afs_sel_t afs_select);
+void MPU6050_GYRO_CFG(mpu6050_t * obj,fs_sel_t fs_select);
 void MPU6050_READ_ACCEL_DATA(mpu6050_t * obj);
-
+void mpu6050_power_management(mpu6050_t * obj);
+void MPU6050_fifo_reset(mpu6050_t *obj);
+void MPU6050_FIFO_EN_Config(mpu6050_t *obj, fifo_en_t fifo_en);
+void MPU6050_SMPL_DIV(mpu6050_t * obj);
+void read_fifo(mpu6050_t * obj);
 #endif /* INC_MPU6050_H_ */
