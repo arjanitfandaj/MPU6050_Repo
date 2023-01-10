@@ -181,3 +181,109 @@ Finished building: MPU6050_test.bin
  
 Finished building: MPU6050_test.list
  
+23:00:55 **** Incremental Build of configuration Debug for project MPU6050_test ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/MPU6050.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"Core/Src/MPU6050.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MPU6050.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F334x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/MPU6050.c: In function 'MPU6050_init':
+../Core/Src/MPU6050.c:36:2: warning: implicit declaration of function 'MPU6050_FIFO_EN_DATA'; did you mean 'MPU6050_FIFO_EN_Config'? [-Wimplicit-function-declaration]
+   36 |  MPU6050_FIFO_EN_DATA(obj); // you can enable fifo data
+      |  ^~~~~~~~~~~~~~~~~~~~
+      |  MPU6050_FIFO_EN_Config
+../Core/Src/MPU6050.c: At top level:
+../Core/Src/MPU6050.c:159:6: warning: conflicting types for 'MPU6050_FIFO_EN_DATA'
+  159 | void MPU6050_FIFO_EN_DATA(mpu6050_t *obj)
+      |      ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/MPU6050.c:36:2: note: previous implicit declaration of 'MPU6050_FIFO_EN_DATA' was here
+   36 |  MPU6050_FIFO_EN_DATA(obj); // you can enable fifo data
+      |  ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/MPU6050.c: In function 'read_fifo':
+../Core/Src/MPU6050.c:226:31: warning: passing argument 3 of 'MPU6050_read' from incompatible pointer type [-Wincompatible-pointer-types]
+  226 |   MPU6050_read(obj, FIFO_R_W, &samples, 6);
+      |                               ^~~~~~~~
+      |                               |
+      |                               uint8_t (*)[6] {aka unsigned char (*)[6]}
+../Core/Src/main.c: In function 'print_data':
+../Core/Src/MPU6050.c:72:57: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[6]' {aka 'unsigned char (*)[6]'}
+   72 | void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
+      |                                                ~~~~~~~~~^~~
+../Core/Src/main.c:70:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   70 |  sprintf(msg,"X_DATA:%d \n Y_data: %d\n Z_data: %d\n ",x_data,y_data,z_data);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:225:11: warning: unused variable 'conf' [-Wunused-variable]
+  225 |   uint8_t conf;
+      |           ^~~~
+../Core/Src/main.c:70:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/main.c:27:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   26 | #include "MPU6050.h"
+  +++ |+#include <stdio.h>
+   27 | /* USER CODE END Includes */
+../Core/Src/MPU6050.c:215:10: warning: unused variable 'user_ct' [-Wunused-variable]
+  215 |  uint8_t user_ct = 0x00;
+      |          ^~~~~~~
+../Core/Src/MPU6050.c: In function 'MPU6050_READ_ACCEL_DATA':
+../Core/Src/MPU6050.c:277:32: warning: passing argument 3 of 'MPU6050_read' from incompatible pointer type [-Wincompatible-pointer-types]
+  277 |  MPU6050_read(obj,ACCEL_XOUT_H,&data,6);
+      |                                ^~~~~
+      |                                |
+      |                                int8_t (*)[6] {aka signed char (*)[6]}
+../Core/Src/main.c: In function 'I2C_detect':
+../Core/Src/MPU6050.c:72:57: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'int8_t (*)[6]' {aka 'signed char (*)[6]'}
+   72 | void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
+      |                                                ~~~~~~~~~^~~
+../Core/Src/main.c:321:4: warning: incompatible implicit declaration of built-in function 'sprintf'
+  321 |    sprintf(msg,"The Address is 0x%02X\n",address);
+      |    ^~~~~~~
+../Core/Src/main.c:321:4: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/MPU6050.c:288:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  288 |  sprintf(msg,"\nX:%f\nY:%f\nZ:%f\n",Ax,Ay,Az);
+      |  ^~~~~~~
+../Core/Src/MPU6050.c:288:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/MPU6050.c:11:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   10 | #include "main.h"
+  +++ |+#include <stdio.h>
+   11 | //extern I2C_HandleTypeDef hi2c
+../Core/Src/main.c:334:4: warning: incompatible implicit declaration of built-in function 'sprintf'
+  334 |    sprintf(msg,"It did not find any devices\n");
+      |    ^~~~~~~
+../Core/Src/main.c:334:4: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/MPU6050.c:288:20: warning: format '%f' expects argument of type 'double', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  288 |  sprintf(msg,"\nX:%f\nY:%f\nZ:%f\n",Ax,Ay,Az);
+      |                   ~^                ~~
+      |                    |                |
+      |                    double           uint32_t {aka long unsigned int}
+      |                   %ld
+../Core/Src/MPU6050.c:288:26: warning: format '%f' expects argument of type 'double', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  288 |  sprintf(msg,"\nX:%f\nY:%f\nZ:%f\n",Ax,Ay,Az);
+      |                         ~^             ~~
+      |                          |             |
+      |                          double        uint32_t {aka long unsigned int}
+      |                         %ld
+../Core/Src/MPU6050.c:288:32: warning: format '%f' expects argument of type 'double', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  288 |  sprintf(msg,"\nX:%f\nY:%f\nZ:%f\n",Ax,Ay,Az);
+      |                               ~^          ~~
+      |                                |          |
+      |                                double     uint32_t {aka long unsigned int}
+      |                               %ld
+../Core/Src/MPU6050.c: In function 'mpu6050_on_interrupt':
+../Core/Src/MPU6050.c:149:1: warning: control reaches end of non-void function [-Wreturn-type]
+  149 | }
+      | ^
+../Core/Src/MPU6050.c: In function 'mpu6050_interrupt_handler':
+../Core/Src/MPU6050.c:191:1: warning: control reaches end of non-void function [-Wreturn-type]
+  191 | }
+      | ^
+arm-none-eabi-gcc -o "MPU6050_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\Arjanit\Desktop\MCU programming\My_Workspace\MPU6050_test_one\MPU6050_test\STM32F334R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MPU6050_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: MPU6050_test.elf
+ 
+arm-none-eabi-size   MPU6050_test.elf 
+arm-none-eabi-objdump -h -S  MPU6050_test.elf  > "MPU6050_test.list"
+arm-none-eabi-objcopy  -O binary  MPU6050_test.elf  "MPU6050_test.bin"
+   text	   data	    bss	    dec	    hex	filename
+  30148	    484	   2204	  32836	   8044	MPU6050_test.elf
+Finished building: default.size.stdout
+Finished building: MPU6050_test.bin
+ 
+ 
+Finished building: MPU6050_test.list
+ 

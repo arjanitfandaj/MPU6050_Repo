@@ -239,7 +239,7 @@ void read_fifo(mpu6050_t * obj)
 
 
 
-			Ax = (x_data /16384.0)*1000; // dont use float use int instead
+			Ax = (x_data /16384.0)*1000; // dont use float because the lib will take processing power and flash storage :)
 			Ay = (y_data/16384.0)*1000;
 			Az = (z_data/16384.0)*1000;
 

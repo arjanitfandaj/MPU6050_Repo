@@ -10,6 +10,6 @@ MPU6050.c:151:9:mpu6050_has_interrupt	16	static
 MPU6050.c:159:6:MPU6050_FIFO_EN_DATA	24	static
 MPU6050.c:174:9:mpu6050_interrupt_handler	24	static
 MPU6050.c:193:6:mpu6050_power_management	24	static
-MPU6050.c:204:13:print_data	24	static
+MPU6050.c:204:13:print_data	16	static
 MPU6050.c:210:6:read_fifo	48	static
 MPU6050.c:263:6:MPU6050_READ_ACCEL_DATA	120	static
