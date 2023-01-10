@@ -63,7 +63,17 @@ void I2C_detect(I2C_HandleTypeDef * I2C);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void print_data(float x_data,float y_data,float z_data)
+{
+	char *msg = (char *)malloc(50*sizeof(char));
 
+//	float msg[30];
+
+
+	sprintf(msg,"X_DATA:%.2f \n Y_data: %.2f\n Z_data: %.2f\n ",x_data,y_data,z_data);
+	HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 10);
+	free(msg);
+}
 /* USER CODE END 0 */
 
 /**
@@ -97,79 +107,11 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-//  I2C_detect(&hi2c1); // if you cant find the address please uncomment this function.
-//  uint8_t data = 0;
 
-//  MPU6050_init(&MPU6050_t, &hi2c1);
-//  MPU6050_PWR_Config(&MPU6050_t);
-//  MPU6050_SMPL_DIV(&MPU6050_t);
-//  MPU6050_ACCEL_CFG(&MPU6050_t);
-//  MPU6050_GYRO_CFG(&MPU6050_t);
-
-//  uint8_t data;
-
-//  uint8_t config;
   MPU6050_init(&MPU6050, &hi2c1,&huart2);
-  mpu6050_power_management(&MPU6050);
-  MPU6050_SMPL_DIV(&MPU6050);
-//  MPU6050_READ_ACCEL_DATA(&MPU6050);
-  MPU6050_FIFO_EN_Config(&MPU6050,ACCEL_FIFO_EN);
-  MPU6050_FIFO_EN_DATA(&MPU6050);
-//  uint8_t d = (0x01 << 3);
-////  HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDRESS << 1, FIFO_EN, 1, &d, 1, 50);
-//  MPU6050_write(&MPU6050, FIFO_EN, &d, 1);
-//
-//  uint8_t data;
-
-
-//  HAL_I2C_Mem_Read(&hi2c1, (MPU6050_ADDRESS <<1) | 1, FIFO_EN, 1, &data, 1, 100);
-//
-  uint8_t data1[6];
-  uint8_t data2[6];
-//  uint32_t Ax;
-//  uint32_t Ay;
-//  uint32_t Az;
-
-//
-
-  read_fifo(&MPU6050);
-  MPU6050_read(&MPU6050, FIFO_COUNTH, &data1, 6);
-  MPU6050_read(&MPU6050, FIFO_COUNTL, &data2, 6);
-//  uint32_t data;
-//  uint32_t data2;
-//  for(int i =0;i<32;i++)
-//  {
-//	  uint8_t samples[6];
-//
-//	  MPU6050_read(&MPU6050, FIFO_R_W, &samples, 6);
-//
-//	  	MPU6050->_X_data = (int16_t)(data[0] << 8 | data[1]);
-//	  	MPU6050->_Y_data = (int16_t)(data[2] << 8 | data[3]);
-//	  	MPU6050->_Z_data = (int16_t)(data[4] << 8 | data[5]);
-//
-//	  		Ax = (MPU6050->_X_data/16384.0)*1000; // dont use float because the lib will take processing power and flash storage :)
-//	  		Ay = (MPU6050->_X_data/16384.0)*1000;
-//	  		Az = (MPU6050->_X_data/16384.0)*1000;
-//
-//
-//  }
 
 
 
-
-
-//  MPU6050_read(&MPU6050_t, FIFO_EN, &config, 1);
-//  config = ((config & 0xF7) | 0x01 << TEMP_FIFO_EN);
-//
-//  MPU6050_write(&MPU6050_t, FIFO_EN, &config, 1);
-//
-//  MPU6050_read(&MPU6050_t, FIFO_EN, &data, 1);
-
-//  	 uint8_t data = 0x07;
-
-//  	MPU6050_write(&MPU6050_t, SMPLRT_DIV, &data, 1);
-//
-//  	  MPU6050_read(&MPU6050_t, SMPLRT_DIV, &config, 1);
 
 
 
@@ -183,7 +125,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 //	  MPU6050_READ_ACCEL_DATA(&MPU6050_t);
-//	  HAL_Delay(1000);
+	  read_fifo(&MPU6050); // for accelerometer
+	  HAL_UART_Transmit(&huart2, (uint8_t *)"\n-----------------------------------------------\n", strlen("-------------------------------------------------"), 10);
+	  HAL_Delay(1500);
   }
   /* USER CODE END 3 */
 }

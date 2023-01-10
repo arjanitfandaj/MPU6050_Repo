@@ -20,16 +20,20 @@ uint32_t Az = 0;
 
 void MPU6050_init(mpu6050_t *obj, I2C_HandleTypeDef *hi2c, UART_HandleTypeDef *UART)
 {
-//	uint8_t data 0x00;
+
 	obj->_i2c = hi2c;
 	obj->_uart = UART;
 	obj->interrupt_flag = 0;
-//	memset(obj->_X_data, 0, sizeof(uint32_t));
-//	memset(obj->_Y_data, 0, sizeof(uint32_t));
-//	memset(obj->_Z_data, 0,sizeof(uint32_t));
-	obj->_X_data = 0;
-	obj->_Y_data = 0;
-	obj->_Z_data = 0;
+	memset(obj->_X_data, 0, sizeof(int32_t));
+	memset(obj->_Y_data, 0, sizeof(int32_t));
+	memset(obj->_Z_data, 0,sizeof(int32_t));
+
+
+	mpu6050_power_management(obj);
+	MPU6050_SMPL_DIV(obj);
+
+	MPU6050_FIFO_EN_Config(obj, ACCEL_FIFO_EN); //you can enable here gyro temperature also
+	MPU6050_FIFO_EN_DATA(obj); // you can enable fifo data
 
 
 
@@ -84,6 +88,7 @@ void MPU6050_read(mpu6050_t *obj, uint8_t reg, uint8_t *buf, uint16_t buflen)
 //	MPU6050_write(obj, PWR_MGMT_1, &data, 1);
 //
 //}
+
 
 
 
@@ -193,27 +198,14 @@ void mpu6050_power_management(mpu6050_t * obj)
 	uint8_t config = 0x00;
 
 	MPU6050_write(obj, PWR_MGMT_1, &config, 1);
-//	config |= (enable_disable << pwr_mng);
-//	MPU6050_write(obj, PWR_MGMT_1, &config, 1);
-	//wait_100ms
-//	HAL_Delay(100);
+
 }
 
-//void mpu6050_read_fifo(mpu6050_t *obj)
-//{
-//
-//	uint8_t config= 0;
-//
-//	MPU6050_read(obj, FIFO_R_W, &config, 1)
-//
-//
-//	for(int8_t i =0;i<32;i++){
-//		int8_t samples[6];
-//
-//	}
-//
-//
-//}
+__weak void print_data( float x_data,float y_data,float z_data){
+	UNUSED(x_data);
+	UNUSED(y_data);
+	UNUSED(z_data);
+}
 
 void read_fifo(mpu6050_t * obj)
 {
@@ -223,33 +215,38 @@ void read_fifo(mpu6050_t * obj)
 	uint8_t user_ct = 0x00;
 
 	MPU6050_read(obj, FIFO_COUNTH, &config[0], 1);
-//	MPU6050_read(obj, FIFO_COUNTL, &config[1], 1);
+
 
 	if(config[0] != 0){
 
-	for(uint8_t i =0; i<32;i++)
+	for(uint8_t i =0; i<config[0];i++)
 	{
 		uint8_t samples[6];
 		uint8_t conf;
 		MPU6050_read(obj, FIFO_R_W, &samples, 6);
-		obj->_X_data = (int16_t)(samples[0] << 8 | samples[1]);
-		obj->_Y_data = (int16_t)(samples[2] << 8 | samples[3]);
-		obj->_Z_data = (int16_t)(samples[4] << 8 | samples[5]);
+//		obj->_X_data = (int16_t)(samples[0] << 8 | samples[1]);
+//		obj->_Y_data = (int16_t)(samples[2] << 8 | samples[3]);
+//		obj->_Z_data = (int16_t)(samples[4] << 8 | samples[5]);
+		int16_t z_data = (int16_t)(samples[2] << 8 | samples[3]);
+		int16_t y_data = (int16_t)(samples[0] << 8 | samples[1]);
+		int16_t x_data = (int16_t)(samples[4] << 8 | samples[5]);
 
-			Ax = (obj->_X_data/16384.0);//*1000; // dont use float because the lib will take processing power and flash storage :)
-			Ay = (obj->_Y_data/16384.0);//*1000;
-			Az = (obj->_Z_data/16384.0);//*1000;
 
-			MPU6050_read(obj, INT_STATUS, &conf, 1);
 
-			if(((conf >> 4) & 0x01)){
-				user_ct |=(0x01 << 2);
-				MPU6050_write(obj, USER_CTRL, &user_ct, 1);
-			}
-			conf = 0;
+		obj->_Z_data[i] = z_data;
+		obj->_Y_data[i] = y_data;
+		obj->_X_data[i] = x_data;
 
-			MPU6050_read(obj, INT_STATUS, &conf, 1);
-			printf("HELLO world");
+
+
+			Ax = (x_data /16384.0);//*1000; // dont use float because the lib will take processing power and flash storage :)
+			Ay = (y_data/16384.0);//*1000;
+			Az = (z_data/16384.0);//*1000;
+
+			print_data(Ax, Ay, Az);
+
+
+
 	}
 
 	}
@@ -280,13 +277,13 @@ void MPU6050_READ_ACCEL_DATA(mpu6050_t * obj)
 	MPU6050_read(obj,ACCEL_XOUT_H,&data,6);
 
 
-	obj->_X_data = (int16_t)(data[0] << 8 | data[1]);
-	obj->_Y_data = (int16_t)(data[2] << 8 | data[3]);
-	obj->_Z_data = (int16_t)(data[4] << 8 | data[5]);
-
-	Ax = (obj->_X_data/16384.0)*1000; // dont use float because the lib will take processing power and flash storage :)
-	Ay = (obj->_Y_data/16384.0)*1000;
-	Az = (obj->_Z_data/16384.0)*1000;
+//	obj->_X_data = (int16_t)(data[0] << 8 | data[1]);
+//	obj->_Y_data = (int16_t)(data[2] << 8 | data[3]);
+//	obj->_Z_data = (int16_t)(data[4] << 8 | data[5]);
+//
+//	Ax = (obj->_X_data/16384.0)*1000; // dont use float because the lib will take processing power and flash storage :)
+//	Ay = (obj->_Y_data/16384.0)*1000;
+//	Az = (obj->_Z_data/16384.0)*1000;
 
 	sprintf(msg,"\nX:%f\nY:%f\nZ:%f\n",Ax,Ay,Az);
 
