@@ -18,12 +18,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "MPU6050.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdlib.h"
 #include "string.h"
+#include "MPU6050.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,7 +48,7 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+mpu6050_t MPU6050;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,11 +60,17 @@ static void MX_I2C1_Init(void);
 void I2C_detect(I2C_HandleTypeDef * I2C);
 
 /* USER CODE END PFP */
-mpu6050_t MPU6050_t;
-fifo_en_t fifo_en;
+
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void print_data(int16_t x_data,int16_t y_data,int16_t z_data)
+{
+	char *msg = (char *)malloc(50*sizeof(char));
 
+	sprintf(msg,"X_DATA:%d \n Y_data: %d\n Z_data: %d\n ",x_data,y_data,z_data);
+	HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 10);
+	free(msg);
+}
 /* USER CODE END 0 */
 
 /**
@@ -98,33 +104,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-//  I2C_detect(&hi2c1); // if you cant find the address please uncomment this function.
-//  uint8_t data = 0;
 
-//  MPU6050_init(&MPU6050_t, &hi2c1);
-//  MPU6050_PWR_Config(&MPU6050_t);
-//  MPU6050_SMPL_DIV(&MPU6050_t);
-//  MPU6050_ACCEL_CFG(&MPU6050_t);
-//  MPU6050_GYRO_CFG(&MPU6050_t);
-
-//  uint8_t data;
-
-  uint8_t config;
-
-//  MPU6050_read(&MPU6050_t, FIFO_EN, &config, 1);
-//  config = ((config & 0xF7) | 0x01 << TEMP_FIFO_EN);
-//
-//  MPU6050_write(&MPU6050_t, FIFO_EN, &config, 1);
-//
-//  MPU6050_read(&MPU6050_t, FIFO_EN, &data, 1);
-
-  	 uint8_t data = 0x07;
-
-//  	MPU6050_write(&MPU6050_t, SMPLRT_DIV, &data, 1);
-//
-//  	  MPU6050_read(&MPU6050_t, SMPLRT_DIV, &config, 1);
-
-
+  MPU6050_init(&MPU6050, &hi2c1,&huart2);
 
   /* USER CODE END 2 */
 
@@ -136,7 +117,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 //	  MPU6050_READ_ACCEL_DATA(&MPU6050_t);
-//	  HAL_Delay(1000);
+	  read_fifo(&MPU6050); // for accelerometer
+	  HAL_UART_Transmit(&huart2, (uint8_t *)"\n-----------------------------------------------\n", strlen("-------------------------------------------------"), 10);
+	  HAL_Delay(1500);
   }
   /* USER CODE END 3 */
 }
@@ -290,6 +273,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PA0 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /*Configure GPIO pin : LD2_Pin */
   GPIO_InitStruct.Pin = LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -301,14 +290,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void I2C_read( uint8_t register_address, uint8_t * buf, uint16_t size)
-{
-	uint8_t reg_address = register_address;
-	HAL_I2C_Master_Transmit(&hi2c1, MPU6050_ADDRESS<<1, &reg_address, 1, 50);
-	HAL_I2C_Master_Receive(&hi2c1, MPU6050_ADDRESS <<1, buf, size, 50);
-
-}
-
+//void I2C_read( uint8_t register_address, uint8_t * buf, uint16_t size)
+//{
+//	uint8_t reg_address = register_address;
+//	HAL_I2C_Master_Transmit(&hi2c1, MPU6050_ADDRESS<<1, &reg_address, 1, 50);
+//	HAL_I2C_Master_Receive(&hi2c1, MPU6050_ADDRESS <<1, buf, size, 50);
+//
+//}
+//
 
 
 
